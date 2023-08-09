@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+	<changeSet id="2023-08-08-00-14" author="ruhanga">
+		<comment>
+			Modify obs concepts to point to correct concept ids for 'Gonorrhea (Swab)', 'Bacteria (Swab)' and 'Chlamydia (Swab)'
+		</comment>
+		<sql>
+			SET SQL_SAFE_UPDATES = 0;
+
+			-- Bacteria (Swab)
+			SET @previous_concept_id := (SELECT concept_id from concept where uuid="2b2f6511-d428-4c25-86af-f015b495d613" limit 1);
+			SET @concept_id := (SELECT concept_id from concept where uuid="ab6588f6-87ee-45ca-a6c5-dc1337f83469" limit 1);
+			UPDATE obs SET concept_id = @concept_id where form_namespace_and_path like "Bahmni^Laboratory.1/131-0" and concept_id = @previous_concept_id;
+
+			-- Gonorrhea (Swab)
+			SET @previous_concept_id := (SELECT concept_id from concept where uuid="ab6588f6-87ee-45ca-a6c5-dc1337f83469" limit 1);
+			SET @concept_id := (SELECT concept_id from concept where uuid="6a57ad22-e890-497f-913e-648966578ade" limit 1);
+			UPDATE obs SET concept_id = @concept_id where form_namespace_and_path like "Bahmni^Laboratory.1/126-0" and concept_id = @previous_concept_id;
+
+			-- Chlamydia (Swab)
+			SET @previous_concept_id := (SELECT concept_id from concept where uuid="637b4f48-8717-45e2-a5f8-96869e3bb768" limit 1);
+			SET @concept_id := (SELECT concept_id from concept where uuid="dd00612e-519b-40c2-bb34-31e00b9c93f5" limit 1);
+			UPDATE obs SET concept_id = @concept_id where form_namespace_and_path like "Bahmni^Laboratory.1/127-0" and concept_id = @previous_concept_id;
+
+			SET SQL_SAFE_UPDATES = 1;
+		</sql>
+	</changeSet>
+</databaseChangeLog>

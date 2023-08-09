@@ -12,6 +12,9 @@
 	<!-- OpenELIS concepts -->
 	<include file="labs.xml"  relativeToChangelogFile="true"/>
 
+	<!-- Obs migrations -->
+	<include file="labResultsObsConceptMigration.xml" relativeToChangelogFile="true"/>
+
 	<!-- Encounter Types -->
 	<changeSet id="postbahmni-2021-03-12-19-51" author="rbuisson">
 		<comment>
